@@ -1,0 +1,118 @@
+%!TeX program = xelatex
+\documentclass[zihao=-4]{ctexart}  % 小四号字
+
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage{enumitem}
+\usepackage{fontspec}
+
+% 字体设置（Windows 用 SimSun，macOS 请改为 Songti SC）
+\setCJKmainfont{SimSun}[AutoFakeBold=2.5]
+\setmainfont{Times New Roman}
+
+\pagestyle{empty}          % 封面不显示页码
+\setlist{nosep, leftmargin=*, labelsep=0.5em}   % 紧凑列表
+
+\begin{document}
+
+% ========== 表格外部（居中，带横线填空） ==========
+\begin{center}
+    % 标题：黑体小二加粗
+    {\heiti\zihao{-2}\textbf{华东理工大学 XXXX---XXXX 学年第 X 学期}}
+
+    \vspace{0.5\baselineskip}
+
+    % “课程论文”行
+     {\heiti\zihao{-2}\textbf\textbf{《XX》课程论文 \quad XXXX.X}}
+
+    % 课程论文行下方行距
+    \vspace{1.5\baselineskip}
+
+    % 班级行
+    班级 \underline{\makebox[3cm][c]{XXXX}} \quad 学号 \underline{\makebox[3cm][c]{XXXXXXXX}} \quad 姓名  \underline{\makebox[4cm][c]{XXXX}}
+
+    % 班级行下方行距
+    \vspace{1\baselineskip}
+
+    % 开课学院行
+    开课学院  \underline{\makebox[3cm][c]{XXXX}} \quad 任课教师 \underline{\makebox[4cm][c]{XXXX}} \qquad 成绩 \underline{\hspace{2cm}}
+\end{center}
+
+%\vspace{1.2\baselineskip}
+
+% ========== 表格内部（三个无间隙子边框） ==========
+% 所有框内标题设为宋体四号，枚举项设为宋体五号
+
+% ----- 框1：论文题目（一行，无空白）-----
+\begin{tcolorbox}[
+    sharp corners,
+    boxrule=0pt,
+    leftrule=0.8pt, rightrule=0.8pt,
+    toprule=0.8pt, bottomrule=0.8pt,
+    left=4pt, right=4pt, top=4pt, bottom=4pt,
+    before skip=0pt, after skip=0pt,
+    colback=white
+]
+    % 论文题目标题：宋体四号（不加粗）
+    \noindent{\zihao{4} 论文题目：TEST-TEST} \hspace{4cm}
+    \vspace{0pt}
+\end{tcolorbox}
+
+% ----- 框2：论文要求 -----
+\begin{tcolorbox}[
+    sharp corners,
+    boxrule=0pt,
+    leftrule=0.8pt, rightrule=0.8pt,
+    toprule=0pt, bottomrule=0.8pt,
+    left=4pt, right=4pt, top=4pt, bottom=4pt,
+    before skip=0pt, after skip=0pt,
+    colback=white
+]
+    % 论文要求标题：宋体四号
+    \noindent{\zihao{4} 论文要求：}
+    % 枚举列表：宋体五号
+    \begin{enumerate}[label=\arabic*., leftmargin=2em]
+        \item {\zihao{5} line1；}
+        \item {\zihao{5} line2；}
+        \item {\zihao{5} line3；}
+        \item {\zihao{5} line4；}
+        \item {\zihao{5} line-end。}
+    \end{enumerate}
+\end{tcolorbox}
+
+% ----- 框3：教师评语（无下边框）-----
+\begin{tcolorbox}[
+    sharp corners,
+    boxrule=0pt,
+    leftrule=0.8pt, rightrule=0.8pt,
+    toprule=0pt, bottomrule=0pt,
+    left=4pt, right=4pt, top=4pt, bottom=0pt,
+    before skip=0pt, after skip=0pt,
+    colback=white
+]
+    % 教师评语标题：宋体四号
+    \noindent{\zihao{4} 教师评语：}
+    \vspace{4cm}   % 留出手写评语的空间
+    \hfill
+\end{tcolorbox}
+
+% ----- 框4：签字日期（带下划线签字区）-----
+\begin{tcolorbox}[
+    sharp corners,
+    boxrule=0pt,
+    leftrule=0.8pt, rightrule=0.8pt,
+    toprule=0pt, bottomrule=0.8pt,
+    left=4pt, right=4pt, top=4pt, bottom=4pt,
+    before skip=0pt, after skip=0pt,
+    colback=white
+]
+    \hfill   % 将内容推至右侧
+    \raggedleft
+    % 签字日期字体使用五号（也可保持与全局一致）
+    {\zihao{5} 教师签字： \underline{\hspace{3cm}} \\
+    \vspace{0.8\baselineskip}
+    年 \hspace{1cm} 月 \hspace{1cm} 日}
+\end{tcolorbox}
+
+\end{document}
