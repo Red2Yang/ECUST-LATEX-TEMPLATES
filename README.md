@@ -14,8 +14,4 @@ Overleaf：导入[src](src/)内tex文件即可。
 
 ## 示例
 
-示例在[pdf](pdf/)内。
-
-封面示例：
-
-![image](img/封面.png)
+示例源文件在[pdf](pdf/)内。预览请访问[img](img/readme.md)目录，目的是避免仓库页面加载时间过长。
