@@ -1,0 +1,238 @@
+% !TeX program = xelatex
+% 使用 XeLaTeX 编译，需要中文字体支持（如 Windows 下的 SimHei/SimSun，或 macOS 下的 Heiti SC/Songti SC）
+\documentclass[zihao=-4, linespread=1.25]{ctexart} % 小四号字，1.25倍行距
+
+% 页面设置（A4，上下左右边距可按需调整）
+\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry}
+
+% 必要宏包
+\usepackage{amsmath}          % 数学公式
+\usepackage{graphicx}         % 插图
+\usepackage{caption}          % 图题、表题定制
+\usepackage{booktabs}         % 三线表
+\usepackage{enumitem}         % 列表定制（如需要）
+\usepackage{fontspec}         % 字体设置（配合 xelatex）
+\usepackage{titlesec}         % 标题格式
+\usepackage{titletoc}         % 目录格式（可选）
+\usepackage{setspace}         % 行距
+\usepackage{indentfirst}      % 首行缩进
+\usepackage[colorlinks, citecolor=blue]{hyperref} % 参考文献超链接
+\usepackage{chngcntr}          % 提供 \counterwithin 命令
+\usepackage{tabularx}
+\usepackage[super,sort&compress]{natbib}
+
+% ========== 中文字体设置（根据操作系统修改） ==========
+\setCJKmainfont{SimSun}[AutoFakeBold=2.5]
+\setCJKsansfont{SimSun}[AutoFakeBold=2.5]
+% macOS 示例（取消下面注释，并注释上面两行）：
+% \setCJKmainfont{Songti SC}[AutoFakeBold=2.5]
+% \setCJKsansfont{Heiti SC}[AutoFakeBold=2.5]
+
+% 西文字体
+\setmainfont{Times New Roman}
+
+% ========== 全局段落格式 ==========
+\setlength{\parindent}{2em}      % 首行缩进两格（中文字符两个）
+\setlength{\parskip}{0pt}        % 段落间不额外空行
+
+% ========== 标题格式 ==========
+% 一级标题（黑体小二号居中，段前距12磅≈4.23mm）
+\titleformat{\section}
+  {\centering\sffamily\bfseries\zihao{-2}}  % 小二号，黑体，居中
+  {\thesection}{1em}{}
+\titlespacing{\section}{0pt}{12bp}{0bp}    % 段前12磅
+
+% 二级标题（黑体四号左对齐，段前距12磅）
+\titleformat{\subsection}
+  {\sffamily\bfseries\zihao{4}}             % 四号，黑体，左对齐
+  {\thesubsection}{1em}{}
+\titlespacing{\subsection}{0pt}{12bp}{0bp}  % 段前12磅
+
+% 三级标题（黑体小四号左对齐，段前距12磅）
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\zihao{-4}}            % 小四号，黑体
+  {\thesubsubsection}{1em}{}
+\titlespacing{\subsubsection}{0pt}{12bp}{0bp}
+
+% ========== 图表标题格式 ==========
+\captionsetup[table]{
+  labelsep=space,           % 编号与标题之间用空格
+  font={bf,small},          % 五号粗体（small 对应五号）
+  position=above,           % 表题在表格上方
+  skip=2pt
+}
+\captionsetup[figure]{
+  labelsep=space,
+  font={bf,small},
+  position=below,           % 图题在图片下方
+  skip=2pt
+}
+\counterwithin{table}{section} % 表格编号包含章节号
+\numberwithin{equation}{section} % 公式编号包含章节号
+\renewcommand{\theequation}{\thesection-\arabic{equation}}
+\numberwithin{figure}{section} % 图片编号包含章节号
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+
+% 重定义表格标题命令，使其符合“表1.1 表名”且不加冒号
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+
+% ========== 摘要、关键词环境 ==========
+\newenvironment{abstractcn}{%
+  \par\noindent{\sffamily\bfseries\zihao{-4} 摘要：}\ignorespaces
+}{%
+  \par\vspace{6bp}
+}
+\newenvironment{keywordscn}{%
+  \par\noindent{\sffamily\bfseries\zihao{-4} 关键词：}\ignorespaces
+}{%
+  \par\vspace{12bp}
+}
+
+% ========== 参考文献格式 ==========
+\bibliographystyle{plain}   % 可根据需要改为 gbt7714 等
+\renewcommand{\refname}{参考文献}  % 将默认的 Bibliography 改为“参考文献”
+
+% 自定义参考文献条目格式（首行缩进两格，序号和内容空一格）
+\makeatletter
+\renewenvironment{thebibliography}[1]{%
+  \section*{\centering\sffamily\bfseries\zihao{-2} 参考文献}% 使用一级标题样式
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+       {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}%
+        \setlength{\itemindent}{2em}      % 首行缩进两格
+        \setlength{\leftmargin}{2em}      % 序号缩进
+        \setlength{\labelwidth}{1.5em}    % 序号宽度
+        \setlength{\labelsep}{0.5em}      % 序号与内容间隔
+        \setlength{\itemsep}{0pt}         % 条目间距
+        \fontsize{12pt}{18pt}\selectfont  % 小四号（12pt）
+        }
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m}
+{\def\@noitemerr
+  {\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist}
+\makeatother
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}   % 清空所有页眉页脚
+
+% 设置页眉左侧为主标题，页眉右侧为页码
+\fancyhead[L]{\zihao{5}\songti 标题（开题报告）（宋体五号字）}
+\fancyhead[R]{\zihao{5}\songti \thepage}
+
+% 删除默认的页眉横线（可选，若需要横线则保留下一行）
+\renewcommand{\headrulewidth}{0.4pt}  % 横线宽度，不需要可设为0pt
+
+% ========== 文档开始 ==========
+\begin{document}
+
+% ---------- 标题部分 ----------
+\begin{center}
+  \vspace{12bp}  % 段前距12磅
+  {\sffamily\bfseries\zihao{-2} 标题（黑体小二号粗体并居中，段前距为12磅）}  % 标题小二号黑体居中
+  \vspace{12bp}
+
+  {\sffamily\bfseries\zihao{4} 班级\ 姓{\quad}名（学号）（班级后在半角状态下空一格，黑体四号并居中，段后距为12磅）}  % 班级 姓名（学号）
+  \vspace{12bp}
+\end{center}
+
+% ---------- 摘要 ----------
+\begin{abstractcn}
+  具体内容（宋体小四号，超出一行顶格排版）
+\end{abstractcn}
+
+% ---------- 关键词 ----------
+\begin{keywordscn}
+  关键词1，关键词2，……（宋体小四号，3～5词，中间用逗号，结束不用标点，超出一行顶格排版）
+\end{keywordscn}
+
+% ---------- 正文 ----------
+\vspace{12bp}
+
+\section{研究背景（黑体小二号居中，段前距为12磅）}
+
+内容（首行缩进两格，宋体小四号）
+
+\subsection{二级标题（黑体四号，左对齐，段前距为12磅）}
+
+内容（首行缩进两格，宋体小四号）
+
+\subsubsection{三级标题（黑体小四号，左对齐，段前距为12磅）}
+
+内容（首行缩进两格，宋体小四号）
+
+\begin{table}[htbp]
+  \centering
+  {\zihao{5}\songti                 % 开始宋体五号
+  \caption{表名（编号与表名相距半角状态下的一个空格，表正上方，宋体五号粗体）}
+  \label{tab:attention}
+  \begin{tabularx}{\textwidth}{XXX}
+    \toprule
+    模块名称 & 参数量（M） & mIoU（\%） \\
+    \midrule
+    SE       & 0.21 & 85.3 \\
+    CBAM     & 0.35 & 86.1 \\
+    Ours     & 0.28 & 87.6 \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{table}
+
+\subsection{二级标题（黑体四号，左对齐，段前距为12磅）}
+
+\subsubsection{三级标题（黑体小四号，左对齐，段前距为12磅）}
+
+内容（首行缩进两格，宋体小四号）
+
+\section{文献综述（黑体小二号居中，段前距为12磅）}
+
+\subsection{二级标题（黑体四号，左对齐，段前距为12磅）}
+
+\subsubsection{三级标题（黑体小四号，左对齐，段前距为12磅）}
+
+内容\cite{ref1}（内容首行缩进两格，宋体小四号；引文在右上角标注，五号字）
+
+\begin{equation}
+  A = -\sum_{i} y_i \log(\hat{y}_i) \label{eq:loss}
+\end{equation}
+
+\subsection{二级标题（黑体四号，左对齐，段前距为12磅）}
+
+\subsubsection{三级标题（黑体小四号，左对齐，段前距为12磅）}
+
+内容\cite{ref2,ref3,ref4}（内容首行缩进两格，宋体小四号；引文在右上角标注，五号字）
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{example-image}  % 替换为实际图片
+  \caption{图名（编号与图名相距半角状态下的一个空格，图正下方，宋体五号粗体）}
+  \label{fig:unet}
+\end{figure}
+
+\section{技术路线（黑体小二号居中，段前距为12磅）}
+
+内容（首行缩进两格，宋体小四号）
+
+\section{进度安排（黑体小二号居中，段前距为12磅）}
+
+内容（首行缩进两格，宋体小四号）
+
+% ---------- 参考文献 ----------
+\begin{thebibliography}{99}
+\bibitem{ref1} 著录内容（首行缩进两格，小四号字，序号和著录内容之间在半角状态下空一格）
+\bibitem{ref2} 著录内容（首行缩进两格，小四号字，序号和著录内容之间在半角状态下空一格）
+\bibitem{ref3} 著录内容（首行缩进两格，小四号字，序号和著录内容之间在半角状态下空一格）
+\bibitem{ref4} 著录内容（首行缩进两格，小四号字，序号和著录内容之间在半角状态下空一格）
+\end{thebibliography}
+
+\end{document}
